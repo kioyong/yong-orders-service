@@ -28,10 +28,4 @@ public class IndexController {
     public String getInitInfo(){
         return "Hello World!";
     }
-
-    @PostMapping("/addUser")
-    public User addUser(@RequestBody User user){
-        return userService.save(user);
     }
-
-}
