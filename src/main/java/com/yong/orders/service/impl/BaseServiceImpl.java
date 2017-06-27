@@ -9,6 +9,7 @@ import com.yong.orders.annotation.Unique;
 import com.yong.orders.common.Result;
 import com.yong.orders.common.ResultCode;
 import com.yong.orders.dao.BaseDao;
+import com.yong.orders.dao.UserDao;
 import com.yong.orders.model.User;
 import com.yong.orders.model.base.BaseEntity;
 import com.yong.orders.service.BaseService;
@@ -27,12 +28,16 @@ import java.util.List;
 import java.util.Map;
 
 
-@Service
+
 public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 
     private static final Logger log = LoggerFactory.getLogger(BaseServiceImpl.class);
 
     BaseDao<T> dao;
+
+    public BaseServiceImpl(BaseDao<T> dao) {
+        this.dao=dao;
+    }
 
     public T beforeDeactivate(T instance) {
         return instance;

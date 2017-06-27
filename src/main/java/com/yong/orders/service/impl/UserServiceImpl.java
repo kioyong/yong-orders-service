@@ -17,11 +17,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
-    @Autowired
-    private UserDao userDao;
+
+    private UserDao dao;
 
     @Autowired
     private UserSnapshotDao userSnapshotDao;
+
+    public UserServiceImpl(UserDao dao){
+        super(dao);
+        this.dao=dao;
+    }
 
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -29,7 +34,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public Result<User> addOne(User user) {
         log.debug("Start User Save method.");
         doSaveUserSnapshot(user);
-        userDao.save(user);
+        dao.save(user);
         return Result.success(user);
     }
 
