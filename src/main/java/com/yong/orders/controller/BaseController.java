@@ -45,6 +45,7 @@ public class BaseController<T> {
     @GetMapping
     public Result<List<T>> findAll() {
         try {
+            logger.debug("start findAll.");
             return service.findAll();
         } catch (Exception err) {
             logger.error("findAll error", err);
