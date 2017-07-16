@@ -95,4 +95,20 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         return hashMap;
     }
 
+    public List<String> findAllDepartmentGroup(String groupName){
+        List<User> userList = dao.findAll();
+        List<String> result = new ArrayList<String>();
+        for(User user : userList){
+            List<DepartmentGroup> departmentGroupList = user.getDepartmentGroup();
+            for(DepartmentGroup departmentGroup : departmentGroupList){
+                String name = departmentGroup.getName();
+                if(name.equals(groupName)){
+                    result.add(user.getName());
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
 }
