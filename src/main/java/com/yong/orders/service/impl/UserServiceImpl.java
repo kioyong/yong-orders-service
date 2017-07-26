@@ -35,7 +35,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         super(dao);
         this.dao=dao;
     }
-
+    public User beforeAdd(User instance) {
+        
+        return instance;
+    }
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
