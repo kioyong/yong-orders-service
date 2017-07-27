@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by LiangYong on 2017/7/26.
  */
 public class SequenceKeys {
-    private static final String USER = "userConfig";
+    public static final String USER = "userConfig";
 
     public final static Map<String,Long> sequenceKeysMap = new HashMap<String,Long>();
 

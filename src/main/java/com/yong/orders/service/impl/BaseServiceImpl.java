@@ -94,7 +94,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
             instanceCopy.setCreatedDate(new Date());
             instanceCopy.setActive(true);
             instanceCopy = beforeAddSave(instanceCopy);
-            this.doSaveForAdd(instanceCopy);
+            doSaveForAdd(instanceCopy);
             return Result.success(instanceCopy);
         } catch (Exception err) {
             log.error("BaseServiceImpl::addOne: ", err);

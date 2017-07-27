@@ -1,5 +1,6 @@
 package com.yong.orders.dao;
 
+import com.yong.orders.dao.custom.SequenceCustomDao;
 import com.yong.orders.model.Sequence;
 import org.springframework.stereotype.Repository;
 
@@ -8,6 +9,6 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface SequenceDao extends BaseDao<Sequence> {
+public interface SequenceDao extends BaseDao<Sequence>,SequenceCustomDao {
 
 }

@@ -2,7 +2,10 @@ package com.yong.orders.service.impl;
 
 import com.netflix.discovery.converters.Auto;
 import com.yong.orders.common.Result;
+import com.yong.orders.common.ResultCode;
+import com.yong.orders.constant.SequenceKeys;
 import com.yong.orders.dao.DepartmentGroupDao;
+import com.yong.orders.dao.SequenceDao;
 import com.yong.orders.dao.UserDao;
 import com.yong.orders.dao.UserSnapshotDao;
 import com.yong.orders.model.DepartmentGroup;
@@ -23,6 +26,8 @@ import java.util.*;
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+
     private UserDao dao;
 
     @Autowired
@@ -31,22 +36,37 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     @Autowired
     private UserSnapshotDao userSnapshotDao;
 
+    @Autowired
+    private SequenceDao sequenceDao;
+
     public UserServiceImpl(UserDao dao){
         super(dao);
         this.dao=dao;
     }
+    @Override
     public User beforeAdd(User instance) {
-        
+        log.debug("Start set Sequence Keys");
+        instance.setId(sequenceDao.getNextSequenceId(SequenceKeys.USER)+"");
         return instance;
     }
-    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+
 
     @Override
     public Result<User> addOne(User user) {
         log.debug("Start User Save method.");
         doSaveUserSnapshot(user);
-        dao.save(user);
-        return Result.success(user);
+        try {
+            validate(user);
+            User instanceCopy = beforeAdd(user);
+            instanceCopy.setCreatedBy(getCreatedBy());
+            instanceCopy.setCreatedDate(new Date());
+            instanceCopy.setActive(true);
+            doSaveForAdd(instanceCopy);
+            return Result.success(instanceCopy);
+        } catch (Exception err) {
+            log.error("BaseServiceImpl::addOne: ", err);
+            return Result.fail(ResultCode.ARGUMENT_EXCEPTION, err.getMessage());
+        }
     }
 
 
