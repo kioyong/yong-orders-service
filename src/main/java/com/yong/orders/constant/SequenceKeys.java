@@ -8,11 +8,13 @@ import java.util.Map;
  */
 public class SequenceKeys {
     public static final String USER = "userConfig";
+    public static final String DEPARTMENT_GROUP = "departmentGroup";
 
     public final static Map<String,Long> sequenceKeysMap = new HashMap<String,Long>();
 
     static {
-        sequenceKeysMap.put(SequenceKeys.USER,0L);
+        sequenceKeysMap.put(SequenceKeys.USER,1000L);
+        sequenceKeysMap.put(SequenceKeys.DEPARTMENT_GROUP,1000L);
     }
 
 
