@@ -120,7 +120,11 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
 
     @Override
     public Result<T> getOne(String id) {
-        return Result.success(dao.findOne(id));
+        T one = dao.findOne(id);
+        if(one == null){
+            return Result.fail(3,"Entity Not found!");
+        }
+        return Result.success(one);
     }
 
     @Override

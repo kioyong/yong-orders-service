@@ -25,7 +25,7 @@ public class IndexController {
     }
 
     @GetMapping("/info")
-    public String getInitInfo(){
-        return "Hello World!";
+    public boolean getInitInfo(){
+        return true;
     }
     }
