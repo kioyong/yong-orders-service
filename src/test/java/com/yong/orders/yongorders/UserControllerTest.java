@@ -30,6 +30,9 @@ public class UserControllerTest {
 
     @Test
     public void testGetUserById(){
+        String aaa="sdfsdf,dddd";
+        String split = aaa.split(",")[0];
+        log.debug(split);
         Result<User> forObject = testRestTemplate.getForObject("/user/123", Result.class);//body
         log.debug("Result = {} ",forObject.toString());
         Assert.assertNotNull(forObject.getPayload());
@@ -37,6 +40,8 @@ public class UserControllerTest {
         forObject = testRestTemplate.getForObject("/user/invalidId", Result.class);
         Assert.assertNotNull(forObject.getMessage());
         Assert.assertNotEquals(0,forObject.getCode());
+
+
 //        testRestTemplate.put
 //        ResponseEntity<Map> forEntity = testRestTemplate.getForEntity("usedfr/123", Map.class);//xml
 //        testRestTemplate.get
