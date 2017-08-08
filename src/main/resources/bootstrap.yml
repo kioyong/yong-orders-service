@@ -18,3 +18,5 @@ eureka:
 logging:
   level:
     com.yong: DEBUG
+
+
