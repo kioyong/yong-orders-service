@@ -28,8 +28,9 @@ import java.util.Scanner;
 
 /**
  * Created by yong.a.liang on 8/8/2017.
+ *
  */
-@Component
+//@Component
 public class UserInitializer {
 
     private static final Logger log = LoggerFactory.getLogger(UserInitializer.class);

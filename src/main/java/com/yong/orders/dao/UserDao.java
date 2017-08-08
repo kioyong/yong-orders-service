@@ -12,4 +12,6 @@ import java.util.List;
 public interface UserDao extends BaseDao<User>{
 
     List<User> findByDepartmentGroupList (List<DepartmentGroup> departmentGroupsList);
+
+    User findByName(String name);
 }
