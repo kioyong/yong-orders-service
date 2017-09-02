@@ -101,23 +101,24 @@ public class UserInitializer {
         public User mapFieldSet(FieldSet fieldSet) throws BindException {
 //            log.info("fieldSet = {}",fieldSet.toString());
 //            log.info("id = {}",fieldSet.readString("Number"));
-            try {
-                Address address = new Address(fieldSet.readString("Add"), fieldSet.readString("Location"), fieldSet.readString("Country"));
-                List<DepartmentGroup> list = new ArrayList<>();
-                User user = new User();
-                user.setId(fieldSet.readString("Number"));
-                user.setName(fieldSet.readString("Name"));
-                user.setAge(fieldSet.readInt("Age"));
-                user.setAddress(address);
-                user.setCreatedDate(fieldSet.readDate("CreatedDate", "yyyy-MM-dd"));
-                user.setLastModifiedDate(fieldSet.readDate("LastModifiedDate"));
-                user.setCreatedBy(fieldSet.readString("CreatedBy"));
-                user.setLastModifiedBy(fieldSet.readString("LastModifiedBy"));
-                user.setActive(fieldSet.readBoolean("IsActive"));
-                return user;
-            }catch (Exception ex){
-                log.error("readUser failed, {}",ex);
-                return null;
+//            try {
+//                Address address = new Address(fieldSet.readString("Add"), fieldSet.readString("Location"), fieldSet.readString("Country"));
+//                List<DepartmentGroup> list = new ArrayList<>();
+//                User user = new User();
+//                user.setId(fieldSet.readString("Number"));
+//                user.setName(fieldSet.readString("Name"));
+//                user.setAge(fieldSet.readInt("Age"));
+//                user.setAddress(address);
+//                user.setCreatedDate(fieldSet.readDate("CreatedDate", "yyyy-MM-dd"));
+//                user.setLastModifiedDate(fieldSet.readDate("LastModifiedDate"));
+//                user.setCreatedBy(fieldSet.readString("CreatedBy"));
+//                user.setLastModifiedBy(fieldSet.readString("LastModifiedBy"));
+//                user.setActive(fieldSet.readBoolean("IsActive"));
+//                return user;
+//            }catch (Exception ex){
+//                log.error("readUser failed, {}",ex);
+//                return null;
+            return null;
             }
         }
     }
@@ -127,4 +128,4 @@ public class UserInitializer {
 
 
 
-}
+

@@ -9,7 +9,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
-@EnableEurekaClient
+//@EnableEurekaClient
+@EnableDiscoveryClient
 public class YongOrdersApplication {
 
 	public static void main(String[] args) {
