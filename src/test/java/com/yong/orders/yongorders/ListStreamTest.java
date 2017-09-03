@@ -29,6 +29,9 @@ public class ListStreamTest {
 
     private static final Logger log = LoggerFactory.getLogger(ListStreamTest.class);
 
+    public static void setUpBeforeClass(){
+        log.debug("start List Stream Test before Class !!!!!!!!!!!!!!!!");
+    }
     @Autowired
     private UserDao userDao;
 
