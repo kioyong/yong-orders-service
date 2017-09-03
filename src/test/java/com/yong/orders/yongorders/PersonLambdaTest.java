@@ -1,16 +1,15 @@
 package com.yong.orders.yongorders;
 
-import com.yong.orders.model.Color;
-import com.yong.orders.model.Person;
-import com.yong.orders.model.Transaction;
-import com.yong.orders.model.Widget;
+import com.yong.orders.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -137,6 +136,195 @@ public class PersonLambdaTest {
         // 3. Collections 集合
         List<String> list = Arrays.asList(strArray);
         stream = list.stream();
+
+    }
+
+    @Test
+    public void UpperTest(){
+        List<String> list = new ArrayList<>();
+        list.add("stream");
+        list.add("java8");
+        list.add("test case");
+
+        List<String> result = list.stream()
+                .map(s -> s.toUpperCase())
+                .collect(Collectors.toList());
+        log.debug("result = {}",result);
+        Assert.assertEquals("STREAM",result.get(0));
+
+        List<String> result1 = list.stream()
+                .map(s -> {
+                    String s1 = s.substring(1, 4);
+                    return s1.toUpperCase();
+                })
+                .collect(Collectors.toList());
+        log.debug("result1 = {}",result1);
+        List<String> result2 = list.stream()
+                .map(String::toUpperCase)
+                .collect(Collectors.toList());
+        log.debug("result2 = {}",result2);
+    }
+
+    @Test
+    public void toSquareTest() {
+        //返回1到10 的平方数
+        int[] ints = IntStream.rangeClosed(1, 10)
+                .map(n -> n * n)
+                .toArray();
+        log.debug("ints ={}",ints);
+
+        List<Integer> list = Arrays.asList(1, 3, 5, 7, 9);
+        List<Integer> result = list.stream()
+                .map(n -> n * n)
+                .collect(Collectors.toList());
+        log.debug("result = {}", result);
+
+        //留下偶数
+        List<Integer> list2 = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        List<Integer> result1 = list2.stream().filter(n -> n % 2 == 0)
+                .collect(Collectors.toList());
+        log.debug("result1 = {}", result1);
+        log.debug("user.dir = {}",System.getProperty("user.dir"));
+        }
+
+
+    @Test
+    public void nullPointTest(){
+        String text1 = "HuangGuiXia";
+        String text2 = "  ";
+        String text3 = null;
+        String text4 = text2.trim();
+        String text5 = "";
+        log.debug("text1.length = {}",text1.length());
+        log.debug("text2.length = {}",text2.length());
+        log.debug("text4.length = {}",text4.length());
+        log.debug("text5.length = {}",text5.length());
+
+        //java 7
+        if(text3 != null){
+            log.debug("text3.length = {}",text3.length());
+        }
+        Assert.assertEquals(text4,text5);
+        Assert.assertTrue(true);
+        Integer text3Length = Optional.ofNullable(text3).map(String::length).orElse(-1);
+        Optional.ofNullable(text3).ifPresent(System.out::println);
+        Assert.assertEquals(new Integer(-1),text3Length);
+
+    }
+
+    @Test
+    public void reducelTest(){
+        //求和sum10
+        int sum = 0;
+        for(int i=1;i<=10;i++){
+            sum += i;
+        }
+        Assert.assertEquals(55,sum
+        );
+        //java8
+        int result = IntStream.rangeClosed(1, 10)
+                .reduce(0, (a, b) -> a + b);//identity 有无起始值，也可无此参数
+        Assert.assertEquals(55,result);
+        int result1 = IntStream.rangeClosed(1, 10)
+                .reduce(Integer::sum)
+                .getAsInt();
+        Assert.assertEquals(55,result1);
+        //求最小值
+        //java7
+        int result2;
+        List<Integer> integers = Arrays.asList(2, 3, 5,1,7, 8, 9);
+        for(int i=0;i<integers.size()-1;i++){
+            if(integers.get(i).compareTo(integers.get(i+1))>0){
+                result = integers.get(i+1);
+            }
+        }
+        Assert.assertEquals(result,1);
+        Integer integer = integers.stream().reduce(Integer::min).get();
+        Assert.assertEquals(Integer.valueOf(1),integer);
+        //求list<String>最长长度的字符串
+        List<String> stringList = Arrays.asList("hello","i am liangyong","give me fine","just for myself");
+        Integer integer1 = stringList.stream()
+                .map(s -> s.length())
+                .reduce(Integer::max)
+                .get();
+        Assert.assertEquals(Integer.valueOf(15),integer1);
+        List<String> collect = stringList.stream()
+                .filter(s -> s.length() == integer1.intValue())
+                .collect(Collectors.toList());
+        String s = collect.get(0);
+        log.debug("max length String = {}",s);
+        Assert.assertEquals(s,"just for myself");
+
+        int asInt = stringList.stream().mapToInt(String::length).max().getAsInt();
+        String s1 = stringList.stream().filter(t -> t.length() == asInt).findFirst().get();
+        Assert.assertEquals(s,s1);
+
+    }
+
+    @Test
+    public void integgerTest(){
+        Integer i1 = 127;
+        Integer i2 =127;
+        Assert.assertEquals(i1,i2);
+        Integer i3 = 128;
+        Integer i4 =128;
+        log.debug("i1==i2?,{}",i1==i2);
+        log.debug("i3==i4?,{}",i3==i4);
+        Integer i6 =Integer.valueOf(100);
+        Assert.assertEquals(i3,i4);
+        Integer ii1 = new Integer(127);
+        int i=127;
+        Integer integer = Integer.valueOf(i);
+        integer.toString();
+        Assert.assertEquals(i1,ii1);
+        log.debug("i1==ii1?,{}",i1==ii1);
+        log.debug("i1.equals(ii1)? {}",i1.equals(ii1));
+
+    }
+
+    @Test
+    public void sequenceTest(){
+        //产生一个从1开始，等差为3 的等差数列，数量为20个
+        int[] ints = IntStream.rangeClosed(1, 20)
+                .map(n -> n * 3)
+                .toArray();
+        log.debug("ints = {}",ints);
+        Assert.assertTrue(true);
+
+        //test String
+        String string = "Hello My name Is Liangyong what Is Your Name";
+        List<String> collect = Arrays.stream(string.split(" "))
+                .map(String::toLowerCase)
+                .distinct()
+                .sorted(Comparator.comparing(String::length))
+                .collect(Collectors.toList());
+        log.debug("String textWord = {}",collect);
+    }
+
+    @Test
+    public void groupingTest(){
+        List<User> users = new ArrayList<>();
+        users.add(new User(5,"test1"));
+        users.add(new User(5,"test2"));
+        users.add(new User(10,"test3"));
+        users.add(new User(10,"test4"));
+        users.add(new User(15,"test5"));
+        users.add(new User(15,"test6"));
+        users.add(new User(20,"test7"));
+        users.add(new User(21,"test8"));
+        // 按年龄分组
+        Collection<List<User>> values = users.stream()
+                .collect(Collectors.groupingByConcurrent(User::getAge))
+                .values();//并发执行，所以循序可能不一样
+        Collection<List<User>> values1 = users.stream()
+                .collect(Collectors.groupingBy(s -> s.getAge()))
+                .values();
+        log.debug("collect = {}",values);
+//        Assert.assertEquals(values,values1); false
+
+        //按成年、未成年分组
+        Map<Boolean, List<User>> collect = users.stream().collect(Collectors.partitioningBy(p -> p.getAge() > 18));
+        log.debug("collect = {}",collect);
 
     }
 }
