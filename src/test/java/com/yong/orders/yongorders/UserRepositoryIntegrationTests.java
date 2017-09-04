@@ -1,7 +1,9 @@
 package com.yong.orders.yongorders;
 
+import com.yong.orders.common.Result;
 import com.yong.orders.dao.UserDao;
 import com.yong.orders.model.User;
+import com.yong.orders.service.UserService;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,12 +13,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.BDDMockito.given;
 
 /**
  * Created by yong.a.liang on 8/8/2017.
@@ -27,12 +33,16 @@ public class UserRepositoryIntegrationTests {
 
     private static final Logger log = LoggerFactory.getLogger(UserRepositoryIntegrationTests.class);
 
-    @Autowired
+//    @Autowired
+    @MockBean
     private UserDao userDao;
+
+    @Autowired
+    private UserService userService;
 
     @Before
     public void setUp(){
-        log.debug("user count = {}",userDao.count());
+//        log.debug("user count = {}",userDao.count());
 //        userDao.deleteAll();
     }
 
@@ -51,6 +61,16 @@ public class UserRepositoryIntegrationTests {
         Assert.assertEquals(result.getAge(),18);
         Assert.assertEquals(result.getName(),"testUser");
         userDao.delete(user);
+    }
+
+    @Test
+    public void mockDaoTest(){
+        List<User> list = new ArrayList<>();
+        list.add(new User(20,"name"));
+//        given(this.userDao.findAll()).willReturn(list);
+        Result<List<User>> all = userService.findAll();
+        List<User> payload = all.getPayload();
+        assertEquals(list,payload);
     }
 
 
