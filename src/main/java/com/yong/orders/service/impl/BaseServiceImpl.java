@@ -92,7 +92,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
             T instanceCopy = beforeAdd(instance);
             instanceCopy.setCreatedBy(getCreatedBy());
             instanceCopy.setCreatedDate(new Date());
-            instanceCopy.setActive(true);
+            instanceCopy.setIsActive(true);
             instanceCopy = beforeAddSave(instanceCopy);
             doSaveForAdd(instanceCopy);
             return Result.success(instanceCopy);
@@ -135,7 +135,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
             Field idField = instanceCopy.getClass().getDeclaredField("id");
             idField.setAccessible(true);
             String id = (String) idField.get(instanceCopy);
-            log.debug("instance's id = " + id + ", active = " + instanceCopy.getActive());
+            log.debug("instance's id = " + id + ", active = " + instanceCopy.getIsActive());
             T old = dao.findOne(id);
             if (old != null) {
                 Field[] fields = old.getClass().getDeclaredFields();
@@ -143,7 +143,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
                     field.setAccessible(true);
                     field.set(old, field.get(instanceCopy));
                 }
-                old.setActive(instanceCopy.getActive());
+                old.setIsActive(instanceCopy.getIsActive());
                 old.setLastModifiedBy(getCreatedBy());
                 old.setLastModifiedDate(new Date());
                 old = beforeUpdateSave(old);

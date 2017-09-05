@@ -60,7 +60,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             User instanceCopy = beforeAdd(user);
             instanceCopy.setCreatedBy(getCreatedBy());
             instanceCopy.setCreatedDate(new Date());
-            instanceCopy.setActive(true);
+            instanceCopy.setIsActive(true);
             doSaveForAdd(instanceCopy);
             return Result.success(instanceCopy);
         } catch (Exception err) {
@@ -91,7 +91,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         List<User> userList = dao.findAll();
         Map<String,String> map =new IdentityHashMap<String,String>();
         for(User user:userList){
-            List<DepartmentGroup> departmentGroupList = user.getDepartmentGroup();
+            List<DepartmentGroup> departmentGroupList = user.getDepartmentGroupList();
                 for(DepartmentGroup departmentGroup : departmentGroupList){
                     map.put(departmentGroup.getId(),user.getName());
                 }
@@ -108,7 +108,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         List<User> userList = dao.findAll();
         Map<String,List<String>> hashMap =new HashMap<>();
         for(User user:userList){
-            List<DepartmentGroup> departmentGroupList = user.getDepartmentGroup();
+            List<DepartmentGroup> departmentGroupList = user.getDepartmentGroupList();
             List<String> groupNameList = new ArrayList<String>();
             for(DepartmentGroup departmentGroup : departmentGroupList){
                 groupNameList.add(departmentGroup.getName());
@@ -122,7 +122,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         List<User> userList = dao.findAll();
         List<String> result = new ArrayList<String>();
         for(User user : userList){
-            List<DepartmentGroup> departmentGroupList = user.getDepartmentGroup();
+            List<DepartmentGroup> departmentGroupList = user.getDepartmentGroupList();
             for(DepartmentGroup departmentGroup : departmentGroupList){
                 String name = departmentGroup.getName();
                 if(name.equals(groupName)){

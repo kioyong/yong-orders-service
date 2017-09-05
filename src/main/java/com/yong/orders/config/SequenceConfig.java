@@ -38,7 +38,10 @@ public class SequenceConfig implements CommandLineRunner {
                 log.debug("Start init {},start Value = {}",entry.getKey(),entry.getValue());
                 String key = entry.getKey();
                 Long value = entry.getValue();
-                Sequence seq = new Sequence(key,value);
+                Sequence seq = Sequence.builder()
+                                    .id(key)
+                                    .sequenceNo(value)
+                                    .build();
                 dao.save(seq);
             }
         }
