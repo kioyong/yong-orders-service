@@ -50,24 +50,24 @@ public class UserRepositoryIntegrationTests {
     public void tearDown(){
 //        userDao.deleteAll();
     }
-
-    @Test
-    public void findUserByname(){
-        User user = new User();
-        user.setName("testUser");
-        user.setAge(18);
-        user = userDao.save(user);
-        User result = userDao.findByName("testUser");
-        Assert.assertEquals(result.getAge(),18);
-        Assert.assertEquals(result.getName(),"testUser");
-        userDao.delete(user);
-    }
+//
+//    @Test
+//    public void findUserByname(){
+//        User user = new User();
+//        user.setName("testUser");
+//        user.setAge(18);
+//        user = userDao.save(user);
+//        User result = userDao.findByName("testUser");
+//        Assert.assertEquals(result.getAge(),18);
+//        Assert.assertEquals(result.getName(),"testUser");
+//        userDao.delete(user);
+//    }
 
     @Test
     public void mockDaoTest(){
         List<User> list = new ArrayList<>();
-        list.add(new User(20,"name"));
-//        given(this.userDao.findAll()).willReturn(list);
+        list.add(User.builder().age(20).name("testUser").build());
+        given(this.userDao.findAll()).willReturn(list);
         Result<List<User>> all = userService.findAll();
         List<User> payload = all.getPayload();
         assertEquals(list,payload);

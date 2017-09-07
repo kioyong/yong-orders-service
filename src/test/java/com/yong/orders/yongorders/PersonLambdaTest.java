@@ -304,14 +304,14 @@ public class PersonLambdaTest {
     @Test
     public void groupingTest(){
         List<User> users = new ArrayList<>();
-        users.add(new User(5,"test1"));
-        users.add(new User(5,"test2"));
-        users.add(new User(10,"test3"));
-        users.add(new User(10,"test4"));
-        users.add(new User(15,"test5"));
-        users.add(new User(15,"test6"));
-        users.add(new User(20,"test7"));
-        users.add(new User(21,"test8"));
+        users.add(User.builder().age(5).name("test1").build());
+        users.add(User.builder().age(5).name("test2").build());
+        users.add(User.builder().age(10).name("test3").build());
+        users.add(User.builder().age(10).name("test4").build());
+        users.add(User.builder().age(15).name("test5").build());
+        users.add(User.builder().age(15).name("test6").build());
+        users.add(User.builder().age(20).name("test7").build());
+        users.add(User.builder().age(21).name("test8").build());
         // 按年龄分组
         Collection<List<User>> values = users.stream()
                 .collect(Collectors.groupingByConcurrent(User::getAge))

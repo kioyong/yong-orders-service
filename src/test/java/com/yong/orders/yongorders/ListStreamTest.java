@@ -39,7 +39,7 @@ public class ListStreamTest {
     public void testStream() throws Exception {
         log.info("start test");
         List<User> users = userDao.findAll();
-        Assert.assertEquals(users.size(),7);
+        Assert.assertNotEquals(users.size(),0);
         Stream<User> distinctUsers = users.stream().distinct();
         Assert.assertEquals(distinctUsers.count(),7);
 //        List<User> result =
