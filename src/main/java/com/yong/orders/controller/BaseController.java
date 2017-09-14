@@ -25,20 +25,21 @@ public class BaseController<T> {
     @PostMapping
     Result<T> addOne(@RequestBody T instance) {
         try {
-            return service.addOne(instance);
+            return Result.success(service.addOne(instance));
         } catch (Exception err) {
             logger.error("addOne error", err);
-            return Result.fail(ResultCode.ARGUMENT_EXCEPTION, err.getMessage());
+            return Result.fail(ResultCode.FAIL, err.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
     Result<T> deactivate(@PathVariable String id) {
         try {
-            return service.delete(id);
+            service.delete(id);
+            return Result.success();
         } catch (Exception err) {
             logger.error("deactivate error", err);
-            return Result.fail(ResultCode.ARGUMENT_EXCEPTION, err.getMessage());
+            return Result.fail(ResultCode.FAIL, err.getMessage());
         }
     }
 
@@ -46,30 +47,30 @@ public class BaseController<T> {
     public Result<List<T>> findAll() {
         try {
             logger.debug("start findAll.");
-            return service.findAll();
+            return Result.success(service.findAll());
         } catch (Exception err) {
             logger.error("findAll error", err);
-            return Result.fail(ResultCode.ARGUMENT_EXCEPTION, err.getMessage());
+            return Result.fail(ResultCode.FAIL, err.getMessage());
         }
     }
 
     @GetMapping("/{id}")
     public Result<T> getOne(@PathVariable String id) {
         try {
-            return service.getOne(id);
+            return Result.success(service.getOne(id));
         } catch (Exception err) {
             logger.error("getOne error", err);
-            return Result.fail(ResultCode.ARGUMENT_EXCEPTION, err.getMessage());
+            return Result.fail(ResultCode.FAIL, err.getMessage());
         }
     }
 
     @PutMapping
     Result<T> updateOne(@RequestBody T instance) {
         try {
-            return service.updateOne(instance);
+            return Result.success(service.updateOne(instance));
         } catch (Exception err) {
             logger.error("updateOne error", err);
-            return Result.fail(ResultCode.ARGUMENT_EXCEPTION, err.getMessage());
+            return Result.fail(ResultCode.FAIL, err.getMessage());
         }
     }
 }

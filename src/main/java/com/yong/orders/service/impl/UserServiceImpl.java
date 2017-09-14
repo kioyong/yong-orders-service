@@ -8,6 +8,7 @@ import com.yong.orders.dao.DepartmentGroupDao;
 import com.yong.orders.dao.SequenceDao;
 import com.yong.orders.dao.UserDao;
 import com.yong.orders.dao.UserSnapshotDao;
+import com.yong.orders.model.Address;
 import com.yong.orders.model.DepartmentGroup;
 import com.yong.orders.model.User;
 import com.yong.orders.model.UserSnapshot;
@@ -52,7 +53,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
 
     @Override
-    public Result<User> addOne(User user) {
+    public User addOne(User user) {
         log.debug("Start User Save method.");
         doSaveUserSnapshot(user);
         try {
@@ -62,19 +63,19 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             instanceCopy.setCreatedDate(new Date());
             instanceCopy.setIsActive(true);
             doSaveForAdd(instanceCopy);
-            return Result.success(instanceCopy);
+            return instanceCopy;
         } catch (Exception err) {
             log.error("BaseServiceImpl::addOne: ", err);
-            return Result.fail(ResultCode.ARGUMENT_EXCEPTION, err.getMessage());
+            throw new IllegalArgumentException(err.getMessage());
         }
     }
 
 
 
     public void doSaveUserSnapshot(User user){
-        UserSnapshot user1 = new UserSnapshot();
-        BeanUtils.copyProperties(user,user1);
-        userSnapshotDao.save(user1);
+//        UserSnapshot user1 = new UserSnapshot();
+//        BeanUtils.copyProperties(user,user1);
+//        userSnapshotDao.save(user1);
     }
 
     @Override
@@ -101,6 +102,18 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         Iterator<Map.Entry<String,String>> iter = null ;
         iter = allSet.iterator() ;
         return iter;
+    }
+
+    @Override
+    public List<User> findByAddress(Address address) {
+        List<User> byAddress = dao.findByAddress(address);
+        return byAddress;
+    }
+
+    @Override
+    public Result<List<User>> findByAddress(List<Address> addresss) {
+        List<User> byAddresss = dao.findByAddress(addresss);
+        return Result.success(byAddresss);
     }
 
     @Override

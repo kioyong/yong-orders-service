@@ -1,5 +1,6 @@
 package com.yong.orders.dao;
 
+import com.yong.orders.model.Address;
 import com.yong.orders.model.DepartmentGroup;
 import com.yong.orders.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -14,4 +15,7 @@ public interface UserDao extends BaseDao<User>{
     List<User> findByDepartmentGroupList (List<DepartmentGroup> departmentGroupsList);
 
     User findByName(String name);
+
+    List<User> findByAddress(Address address);
+    List<User> findByAddress(List<Address> address);
 }

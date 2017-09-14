@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by yong.a.liang on 6/14/2017.
  */
@@ -24,7 +27,10 @@ public class IndexController {
     @GetMapping("/index")
     public String getInitMessage(){
 //        log.info("test @Slf4j annotation");
-        return "Hello World!";
+         List<String> list =new ArrayList<>();
+         list.add("test");
+         list.get(2);
+        return list.get(2);
     }
 
     @GetMapping("/info")

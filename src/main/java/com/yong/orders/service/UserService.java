@@ -1,6 +1,7 @@
 package com.yong.orders.service;
 
 import com.yong.orders.common.Result;
+import com.yong.orders.model.Address;
 import com.yong.orders.model.User;
 
 import java.util.*;
@@ -14,4 +15,6 @@ public interface UserService extends BaseService<User>{
     Result<List<User>> findUserByDepartmentGroup(String departmentGroupId);
     Map<String,List<String>> findUserByDepartmentGroupAll();
     Iterator<Map.Entry<String,String>> findUserByDepartmentGroupMap();
+    List<User> findByAddress(Address address);
+    Result<List<User>> findByAddress(List<Address> addresss);
 }

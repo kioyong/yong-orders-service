@@ -1,7 +1,9 @@
 package com.yong.orders.controller;
 
 import com.yong.orders.common.Result;
+import com.yong.orders.model.Address;
 import com.yong.orders.model.User;
+import com.yong.orders.service.AddressService;
 import com.yong.orders.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,9 @@ public class UserController extends BaseController<User>{
     private UserService service;
 
     @Autowired
+    private AddressService addService;
+
+    @Autowired
     public UserController(UserService service){
         super(service);
         this.service = service;
@@ -44,6 +49,15 @@ public class UserController extends BaseController<User>{
         return service.findUserByDepartmentGroupMap();
     }
 
-
+    @GetMapping("/location/{locationId}")
+    public Result<List<User>> findByLocation(@PathVariable String locationId){
+        List<Address> byLocation = addService.findByLocation(locationId);
+        List<User> result = new ArrayList<>();
+        for(Address address:byLocation){
+            List<User> byAddress = service.findByAddress(address);
+            result.addAll(byAddress);
+        }
+        return Result.success(result);
+    }
 
 }

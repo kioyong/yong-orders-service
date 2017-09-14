@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.yong.orders.common.ResultCode.FAIL;
 
 
 public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
@@ -86,20 +87,19 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     }
 
     @Override
-    public Result<T> addOne(T instance) {
+    public T addOne(T instance) throws IllegalArgumentException{
         try {
             validate(instance);
-            T instanceCopy = beforeAdd(instance);
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+        T instanceCopy = beforeAdd(instance);
             instanceCopy.setCreatedBy(getCreatedBy());
             instanceCopy.setCreatedDate(new Date());
             instanceCopy.setIsActive(true);
             instanceCopy = beforeAddSave(instanceCopy);
             doSaveForAdd(instanceCopy);
-            return Result.success(instanceCopy);
-        } catch (Exception err) {
-            log.error("BaseServiceImpl::addOne: ", err);
-            return Result.fail(ResultCode.ARGUMENT_EXCEPTION, err.getMessage());
-        }
+            return instanceCopy;
     }
 
     protected void doSaveForAdd(T instance) {
@@ -107,28 +107,27 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     }
 
     @Override
-    public Result<T> delete(String id) {
+    public void delete(String id) {
         dao.delete(id);
-        return Result.success();
     }
 
     @Override
-    public Result<List<T>> findAll(){
+    public List<T> findAll(){
         List<T> list= dao.findAll();
-        return Result.success(list);
+        return list;
     }
 
     @Override
-    public Result<T> getOne(String id) {
+    public T getOne(String id) {
         T one = dao.findOne(id);
         if(one == null){
-            return Result.fail(3,"Entity Not found!");
+            throw new IllegalArgumentException("Entity Not found!");
         }
-        return Result.success(one);
+        return one;
     }
 
     @Override
-    public Result<T> updateOne(T instance) {
+    public T updateOne(T instance) throws IllegalArgumentException{
         try {
             validate(instance);
             T instanceCopy = beforeUpdate(instance);
@@ -148,12 +147,11 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
                 old.setLastModifiedDate(new Date());
                 old = beforeUpdateSave(old);
                 this.doSaveForUpdate(old);
-                return Result.success(old);
+                return old;
             }
-            return Result.fail(ResultCode.ARGUMENT_EXCEPTION, "Source not found in MongoDB, Update fail.");
-        } catch (Exception err) {
-            log.error("BaseServiceImpl::updateOne: ", err);
-            return Result.fail(ResultCode.ARGUMENT_EXCEPTION, err.getMessage());
+            throw new IllegalArgumentException("id not found,update fail");
+        }catch(Exception ex){
+            throw new IllegalArgumentException(ex.getMessage());
         }
     }
     protected void doSaveForUpdate(T instance) {
@@ -164,7 +162,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
         log.info("instance = " + instance);
         if (instance == null) {
             log.error("instance is null!return error.");
-            throw new NullPointerException("instance is null!");
+            throw new IllegalAccessException("instance is null!");
         }
 
         // check combination unique

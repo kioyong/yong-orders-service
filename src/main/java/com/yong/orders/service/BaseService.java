@@ -10,10 +10,10 @@ import java.util.List;
  */
 public interface BaseService<T> {
 
-    Result<T> addOne(T instance);
-    Result<T> delete(String id);
-    Result<T> getOne(String id);
-    Result<T> updateOne(T instance);
+    T addOne(T instance);
+    void delete(String id);
+    T getOne(String id);
+    T updateOne(T instance);
 
-    Result<List<T>> findAll();
+    List<T> findAll();
 }
