@@ -18,4 +18,8 @@ public interface UserDao extends BaseDao<User>{
 
     List<User> findByAddress(Address address);
     List<User> findByAddress(List<Address> address);
+    List<User> findByAddressAddIn(List<String> ids);
+    List<User> findByAddressAdd(String id);
+    List<User> findByAddressLocation(String location);
+
 }

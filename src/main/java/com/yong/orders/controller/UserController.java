@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by yong.a.liang on 6/22/2017.
@@ -51,13 +52,16 @@ public class UserController extends BaseController<User>{
 
     @GetMapping("/location/{locationId}")
     public Result<List<User>> findByLocation(@PathVariable String locationId){
-        List<Address> byLocation = addService.findByLocation(locationId);
-        List<User> result = new ArrayList<>();
-        for(Address address:byLocation){
-            List<User> byAddress = service.findByAddress(address);
-            result.addAll(byAddress);
-        }
+        List<Address> list = addService.findByLocation(locationId);
+        List<String> addList = list.stream().map(a -> a.getAdd()).collect(Collectors.toList());
+        List<User> result = service.findByAddressId(addList);
         return Result.success(result);
+    }
+
+    @GetMapping("/address/{addressId}")
+    public Result<List<User>> findByAddressId(@PathVariable String addressId){
+        List<User> byAddressId = service.findByAddressId(addressId);
+        return Result.success(byAddressId);
     }
 
 }

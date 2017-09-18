@@ -68,9 +68,8 @@ public class UserRepositoryIntegrationTests {
         List<User> list = new ArrayList<>();
         list.add(User.builder().age(20).name("testUser").build());
         given(this.userDao.findAll()).willReturn(list);
-        Result<List<User>> all = userService.findAll();
-        List<User> payload = all.getPayload();
-        assertEquals(list,payload);
+        List<User> all = userService.findAll();
+        assertEquals(list,all);
     }
 
 

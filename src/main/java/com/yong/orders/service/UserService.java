@@ -16,5 +16,9 @@ public interface UserService extends BaseService<User>{
     Map<String,List<String>> findUserByDepartmentGroupAll();
     Iterator<Map.Entry<String,String>> findUserByDepartmentGroupMap();
     List<User> findByAddress(Address address);
-    Result<List<User>> findByAddress(List<Address> addresss);
+    List<User> findByAddressId(List<String> id);
+    List<User> findByAddressId(String id);
+    List<User> findByAddressLocation(String location);
+
+
 }

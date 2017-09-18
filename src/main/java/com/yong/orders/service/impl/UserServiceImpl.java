@@ -111,10 +111,20 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public Result<List<User>> findByAddress(List<Address> addresss) {
-        List<User> byAddresss = dao.findByAddress(addresss);
-        return Result.success(byAddresss);
+    public List<User> findByAddressId(List<String> ids) {
+        return dao.findByAddressAddIn(ids);
     }
+
+    @Override
+    public List<User> findByAddressId(String id) {
+        return dao.findByAddressAdd(id);
+    }
+
+    @Override
+    public List<User> findByAddressLocation(String location) {
+        return dao.findByAddressLocation(location);
+    }
+
 
     @Override
     public Map<String,List<String>> findUserByDepartmentGroupAll(){
