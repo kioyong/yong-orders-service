@@ -22,10 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.yong.orders.common.ResultCode.FAIL;
 
@@ -108,7 +105,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
 
     @Override
     public void delete(String id) {
-        dao.delete(id);
+        dao.deleteById(id);
     }
 
     @Override
@@ -119,11 +116,12 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
 
     @Override
     public T getOne(String id) {
-        T one = dao.findOne(id);
+        //TODO why Optional
+        Optional<T> one = dao.findById(id);
         if(one == null){
             throw new IllegalArgumentException("Entity Not found!");
         }
-        return one;
+        return one.get();
     }
 
     @Override
@@ -135,7 +133,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
             idField.setAccessible(true);
             String id = (String) idField.get(instanceCopy);
             log.debug("instance's id = " + id + ", active = " + instanceCopy.getIsActive());
-            T old = dao.findOne(id);
+            T old = dao.findById(id).get();
             if (old != null) {
                 Field[] fields = old.getClass().getDeclaredFields();
                 for (Field field : fields) {

@@ -46,7 +46,7 @@ public class UserInitializer {
         List<User> users = readUsers();
 
         log.info("users count = {}",users.size());
-        userDao.save(users);
+        userDao.saveAll(users);
 
     }
 

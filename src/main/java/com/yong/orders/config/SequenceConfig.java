@@ -33,7 +33,7 @@ public class SequenceConfig implements CommandLineRunner {
 
     public void initSequence (){
         for (Map.Entry<String,Long> entry : SequenceKeys.sequenceKeysMap.entrySet()){
-            Sequence sequence = dao.findOne(entry.getKey());
+            Sequence sequence = dao.findById(entry.getKey()).get();
             if (null == sequence){
                 log.debug("Start init {},start Value = {}",entry.getKey(),entry.getValue());
                 String key = entry.getKey();

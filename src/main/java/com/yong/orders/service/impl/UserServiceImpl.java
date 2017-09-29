@@ -80,7 +80,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public Result<List<User>> findUserByDepartmentGroup(String departmentGroupId) {
-        DepartmentGroup departmentGroup = departmentGroupDao.findOne(departmentGroupId);
+        DepartmentGroup departmentGroup = departmentGroupDao.findById(departmentGroupId).get();
         List<DepartmentGroup> departmentGroupList=new ArrayList<DepartmentGroup>();
         departmentGroupList.add(departmentGroup);
         List<User> userList = dao.findByDepartmentGroupList(departmentGroupList);
