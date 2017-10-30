@@ -1,4 +1,4 @@
-package com.yong.orders.yongorders;
+package com.yong.orders.demo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

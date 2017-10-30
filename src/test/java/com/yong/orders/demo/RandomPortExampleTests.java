@@ -1,4 +1,4 @@
-package com.yong.orders.yongorders;
+package com.yong.orders.demo;
 
 import org.junit.AfterClass;
 import static org.junit.Assert.*;

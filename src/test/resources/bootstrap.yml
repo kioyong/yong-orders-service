@@ -8,3 +8,9 @@ eureka:
 logging:
   level:
     com.yong: DEBUG
+spring:
+  application:
+      name: yong-orders
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/unit_test

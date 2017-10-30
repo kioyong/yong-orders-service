@@ -1,11 +1,9 @@
-package com.yong.orders.yongorders;
+package com.yong.orders.demo;
 
-import com.yong.orders.common.Result;
 import com.yong.orders.dao.UserDao;
 import com.yong.orders.model.User;
 import com.yong.orders.service.UserService;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.yong.orders.yongorders;
+package com.yong.orders.demo;
 
 import com.yong.orders.model.*;
 import org.junit.Assert;
@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
