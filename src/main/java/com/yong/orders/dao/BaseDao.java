@@ -8,6 +8,5 @@ import org.springframework.data.repository.NoRepositoryBean;
  */
 @NoRepositoryBean
 public interface BaseDao <T> extends MongoRepository<T, String> {
-//    T findOne(String id);
 //    void delete(String id);
 }

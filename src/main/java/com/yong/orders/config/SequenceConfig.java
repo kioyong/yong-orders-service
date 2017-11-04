@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by LiangYong on 2017/7/26.
@@ -28,22 +29,20 @@ public class SequenceConfig implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         log.info("Start Init Sequence.");
-        initSequence();
+        try {
+            initSequence();
+        }catch (Exception ex){
+            log.error("exception handle : {}",ex);
+
+        }
     }
 
     public void initSequence (){
-        for (Map.Entry<String,Long> entry : SequenceKeys.sequenceKeysMap.entrySet()){
-            Sequence sequence = dao.findById(entry.getKey()).get();
-            if (null == sequence){
-                log.debug("Start init {},start Value = {}",entry.getKey(),entry.getValue());
-                String key = entry.getKey();
-                Long value = entry.getValue();
-                Sequence seq = Sequence.builder()
-                                    .id(key)
-                                    .sequenceNo(value)
-                                    .build();
-                dao.save(seq);
-            }
-        }
+        SequenceKeys.sequenceKeysMap.entrySet().stream()
+            .filter(t -> !dao.findById(t.getKey()).isPresent())
+            .forEach(t -> {
+                log.info("Start init {},start Value = {}",t.getKey(),t.getValue());
+                dao.save(Sequence.builder().id(t.getKey()).sequenceNo(t.getValue()).build());
+            });
     }
 }

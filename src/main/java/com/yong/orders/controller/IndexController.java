@@ -34,21 +34,14 @@ public class IndexController {
                     .toFormatter();
 
     @GetMapping("/index")
-    public String getInitMessage(){
+    public String index(){
 //        log.info("test @Slf4j annotation");
-         List<String> list =new ArrayList<>();
-         list.add("test");
-         list.get(2);
-        return list.get(2);
+        return "hello orders-service!";
+    }
+    @GetMapping("/error")
+    public String exceptionTest(){
+//        log.info("test @Slf4j annotation");
+        throw new RuntimeException("Exception Test Found!");
     }
 
-    @GetMapping("/info")
-    public ZonedDateTime getInitInfo(@RequestParam String zonedDateTime){
-//        zonedDateTime = zonedDateTime + "T00:00:00Z";
-        log.debug("zonedDateTime = {}",zonedDateTime);
-//        2017-07-12T07:00:00 08:00[Asia/Macau]
-        ZonedDateTime z1 = ZonedDateTime.parse(zonedDateTime,DATE_TIME_NANOSECONDS_OFFSET_FORMATTER);
-        log.debug("testZoneDate = {}",z1);
-        return z1;
-    }
 }
