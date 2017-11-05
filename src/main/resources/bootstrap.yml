@@ -7,18 +7,9 @@ spring:
       name: yong-orders
   data:
     mongodb:
-      uri: mongodb://localhost:27017
       database: location
-
-eureka:
-  client:
-    fetch-registry: false
-    register-with-eureka: false
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    statusPageUrlPath: /info
-    healthCheckUrlPath: /health
+  profiles:
+    active: dev
 
 logging:
   level:
